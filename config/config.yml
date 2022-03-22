@@ -1,0 +1,13 @@
+app:
+  name: 'fairseller-backend'
+  version: '1.0.0'
+
+http:
+  port: '3000'
+
+logger:
+  log_level: 'debug'
+  rollbar_env: 'fairseller-backend'
+
+postgres:
+  pool_max: 2
