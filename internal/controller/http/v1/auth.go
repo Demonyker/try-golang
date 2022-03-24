@@ -5,30 +5,30 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"fairseller-backend/internal/entity"
-	"fairseller-backend/internal/usecase"
+	_ "fairseller-backend/internal/entity"
+	"fairseller-backend/internal/useCase"
 	"fairseller-backend/pkg/logger"
 )
 
 type authRoutes struct {
-	authUseCase usecase.Auth
-	logger logger.Interface
+	authUseCase useCase.Auth
+	logger      logger.Interface
 }
 
-func newAuthRoutes(handler *gin.RouterGroup, authUseCase usecase.Auth, logger logger.Interface) {
+func newAuthRoutes(handler *gin.RouterGroup, authUseCase useCase.Auth, logger logger.Interface) {
 	routes := &authRoutes{authUseCase, logger}
 
 	authHandler := handler.Group("/auth")
-	{
-		authHandler.POST("/sign-up", routes.signUp)
-	}
+	authHandler.POST("/sign-up", routes.signUp)
 }
 
 // @Summary     Sign up
 // @Description Sign up first step with send code to mobile
+// @Tags        Auth
 // @Accept      json
 // @Produce     json
-// @Success     200 {object} historyResponse
+// @Param       request body entity.SignUpRequestDto true "Phone for getting code"
+// @Success     200
 // @Failure     500 {object} response
 // @Router      /auth/sign-up [post]
 func (r *authRoutes) signUp(c *gin.Context) {

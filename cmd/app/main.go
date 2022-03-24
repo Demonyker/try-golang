@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 
 	"fairseller-backend/config"
@@ -15,7 +14,6 @@ func main() {
 		log.Fatalf("Config error: %s", err)
 	}
 
-	fmt.Println(cfg)
 	// Run
 	app.Run(cfg)
 }
