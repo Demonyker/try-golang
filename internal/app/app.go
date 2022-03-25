@@ -7,16 +7,15 @@ import (
 	"os/signal"
 	"syscall"
 
-	"fairseller-backend/pkg/httpserver"
-
-	"github.com/gin-gonic/gin"
-
 	"fairseller-backend/config"
 	v1 "fairseller-backend/internal/controller/http/v1"
 	"fairseller-backend/internal/repository"
 	"fairseller-backend/internal/usecase"
+	"fairseller-backend/pkg/httpserver"
 	"fairseller-backend/pkg/logger"
 	"fairseller-backend/pkg/postgres"
+
+	"github.com/gin-gonic/gin"
 )
 
 // Run creates objects via constructors.

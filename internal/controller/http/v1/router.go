@@ -3,6 +3,7 @@ package v1
 
 import (
 	"fairseller-backend/internal/usecase"
+
 	"github.com/gin-gonic/gin"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	swaggerFiles "github.com/swaggo/files"

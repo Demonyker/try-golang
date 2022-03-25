@@ -6,6 +6,7 @@ import (
 	"fairseller-backend/internal/entity"
 	"fairseller-backend/internal/usecase"
 	"fairseller-backend/pkg/logger"
+
 	"github.com/gin-gonic/gin"
 )
 
