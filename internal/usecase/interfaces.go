@@ -1,13 +1,12 @@
-package useCase
+package usecase
 
 import (
 	"context"
-
 	"fairseller-backend/internal/entity"
 )
 
 type (
-	// Auth - auth useCase.
+	// Auth - auth usecase.
 	Auth interface {
 		SignUpRequest(context.Context, entity.SignUpRequest) error
 	}

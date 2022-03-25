@@ -6,17 +6,17 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"fairseller-backend/internal/entity"
-	"fairseller-backend/internal/useCase"
+	"fairseller-backend/internal/usecase"
 	"fairseller-backend/pkg/logger"
 )
 
 type authRoutes struct {
-	authUseCase useCase.Auth
+	authUseCase usecase.Auth
 	logger      logger.Interface
 }
 
-func newAuthRoutes(handler *gin.RouterGroup, authUseCase useCase.Auth, logger logger.Interface) {
-	routes := &authRoutes{authUseCase, logger}
+func newAuthRoutes(handler *gin.RouterGroup, authUseCase usecase.Auth, l logger.Interface) {
+	routes := &authRoutes{authUseCase, l}
 
 	authHandler := handler.Group("/auth")
 	authHandler.POST("/sign-up-request", routes.signUpRequest)

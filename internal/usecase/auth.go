@@ -1,4 +1,4 @@
-package useCase
+package usecase
 
 import (
 	"context"
@@ -13,14 +13,14 @@ type AuthUseCase struct {
 	logger         logger.Interface
 }
 
-func NewAuthUseCase(userRepository UserRepository, logger logger.Interface) *AuthUseCase {
+func NewAuthUseCase(userRepository UserRepository, l logger.Interface) *AuthUseCase {
 	return &AuthUseCase{
 		userRepository: userRepository,
-		logger:         logger,
+		logger:         l,
 	}
 }
 
-// SignUpRequest - first step of sign up with sending code to phone
+// SignUpRequest - first step of sign up with sending code to phone.
 func (uc *AuthUseCase) SignUpRequest(ctx context.Context, dto entity.SignUpRequest) error {
 	user, err := uc.userRepository.GetOneByPhone(ctx, dto.Phone)
 	if err != nil {

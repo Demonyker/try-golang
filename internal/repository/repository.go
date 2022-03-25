@@ -2,10 +2,10 @@ package repository
 
 import "fairseller-backend/pkg/postgres"
 
-const _defaultEntityCap = 64
+// const _defaultEntityCap = 64
 
 type Repository struct {
-	UserRepository *userRepository
+	UserRepository *UserRepository
 }
 
 func New(pg *postgres.Postgres) *Repository {

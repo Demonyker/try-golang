@@ -2,7 +2,7 @@
 package v1
 
 import (
-	"fairseller-backend/internal/useCase"
+	"fairseller-backend/internal/usecase"
 	"github.com/gin-gonic/gin"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	swaggerFiles "github.com/swaggo/files"
@@ -20,7 +20,7 @@ import (
 // @version     1.0
 // @host        localhost:3000
 // @BasePath    /v1
-func NewRouter(handler *gin.Engine, logger logger.Interface, authUseCase useCase.Auth) {
+func NewRouter(handler *gin.Engine, l logger.Interface, authUseCase usecase.Auth) {
 	// Options
 	handler.Use(gin.Logger())
 	handler.Use(gin.Recovery())
@@ -34,5 +34,5 @@ func NewRouter(handler *gin.Engine, logger logger.Interface, authUseCase useCase
 
 	// Routers
 	v1Handler := handler.Group("/v1")
-	newAuthRoutes(v1Handler, authUseCase, logger)
+	newAuthRoutes(v1Handler, authUseCase, l)
 }
