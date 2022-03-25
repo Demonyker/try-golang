@@ -33,6 +33,7 @@ func Run(cfg *config.Config) {
 	// Use case
 	authUseCase := useCase.NewAuthUseCase(
 		repositoryContainer.UserRepository,
+		l,
 	)
 
 	// HTTP Server

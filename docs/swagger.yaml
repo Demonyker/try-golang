@@ -1,9 +1,11 @@
 basePath: /v1
 definitions:
-  entity.SignUpRequestDto:
+  v1.SignUpRequestDto:
     properties:
       phone:
         type: string
+    required:
+    - phone
     type: object
   v1.response:
     properties:
@@ -18,7 +20,7 @@ info:
   title: Fairseller API
   version: "1.0"
 paths:
-  /auth/sign-up:
+  /auth/sign-up-request:
     post:
       consumes:
       - application/json
@@ -26,10 +28,10 @@ paths:
       parameters:
       - description: Phone for getting code
         in: body
-        name: request
+        name: data
         required: true
         schema:
-          $ref: '#/definitions/entity.SignUpRequestDto'
+          $ref: '#/definitions/v1.SignUpRequestDto'
       produces:
       - application/json
       responses:

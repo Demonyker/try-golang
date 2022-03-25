@@ -16,7 +16,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/auth/sign-up": {
+        "/auth/sign-up-request": {
             "post": {
                 "description": "Sign up first step with send code to mobile",
                 "consumes": [
@@ -32,11 +32,11 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "description": "Phone for getting code",
-                        "name": "request",
+                        "name": "data",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/entity.SignUpRequestDto"
+                            "$ref": "#/definitions/v1.SignUpRequestDto"
                         }
                     }
                 ],
@@ -55,8 +55,11 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "entity.SignUpRequestDto": {
+        "v1.SignUpRequestDto": {
             "type": "object",
+            "required": [
+                "phone"
+            ],
             "properties": {
                 "phone": {
                     "type": "string"

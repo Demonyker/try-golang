@@ -1,5 +1,5 @@
 package entity
 
-type SignUpRequestDto struct {
+type SignUpRequest struct {
 	Phone string `json:"phone"`
 }
