@@ -3,11 +3,10 @@ package v1
 import (
 	"net/http"
 
-	"github.com/gin-gonic/gin"
-
 	"fairseller-backend/internal/entity"
 	"fairseller-backend/internal/usecase"
 	"fairseller-backend/pkg/logger"
+	"github.com/gin-gonic/gin"
 )
 
 type authRoutes struct {

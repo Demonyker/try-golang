@@ -2,9 +2,10 @@ package usecase
 
 import (
 	"context"
+	"fmt"
+
 	"fairseller-backend/internal/entity"
 	"fairseller-backend/pkg/logger"
-	"fmt"
 )
 
 // AuthUseCase -.
@@ -25,6 +26,7 @@ func (uc *AuthUseCase) SignUpRequest(ctx context.Context, dto entity.SignUpReque
 	user, err := uc.userRepository.GetOneByPhone(ctx, dto.Phone)
 	if err != nil {
 		uc.logger.Error(err, "AuthUseCase - SignUpRequest")
+
 		return fmt.Errorf("internal server error")
 	}
 

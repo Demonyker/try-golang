@@ -2,9 +2,10 @@ package repository
 
 import (
 	"context"
+	"fmt"
+
 	"fairseller-backend/internal/entity"
 	"fairseller-backend/pkg/postgres"
-	"fmt"
 )
 
 // UserRepository -.
@@ -42,6 +43,7 @@ func (r *UserRepository) GetOneByPhone(ctx context.Context, phone string) (entit
 		From("users").
 		Where("users.phone = ?", phone).
 		ToSql()
+
 	if err != nil {
 		return user, fmt.Errorf("UserRepository - GetOneByPhone - r.Builder: %w", err)
 	}

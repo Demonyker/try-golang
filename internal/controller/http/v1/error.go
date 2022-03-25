@@ -19,7 +19,9 @@ func errorResponse(c *gin.Context, code int, msg string) {
 
 func getValidationErrorMsg(fe validator.FieldError) string {
 	value := fmt.Sprintf("%v", fe.Value())
-	switch fe.Tag() {
+	tag := fe.Tag()
+
+	switch tag {
 	case "required":
 		return fe.Field() + " field is required"
 	case "email":

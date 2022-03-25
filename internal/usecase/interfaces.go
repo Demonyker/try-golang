@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"context"
+
 	"fairseller-backend/internal/entity"
 )
 
