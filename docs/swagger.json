@@ -29,7 +29,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/v1.SignUpRequestDto"
+                            "$ref": "#/definitions/v1.signUpRequestBody"
                         }
                     }
                 ],
@@ -48,7 +48,16 @@
         }
     },
     "definitions": {
-        "v1.SignUpRequestDto": {
+        "v1.response": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string",
+                    "example": "message"
+                }
+            }
+        },
+        "v1.signUpRequestBody": {
             "type": "object",
             "required": [
                 "phone"
@@ -56,15 +65,6 @@
             "properties": {
                 "phone": {
                     "type": "string"
-                }
-            }
-        },
-        "v1.response": {
-            "type": "object",
-            "properties": {
-                "error": {
-                    "type": "string",
-                    "example": "message"
                 }
             }
         }

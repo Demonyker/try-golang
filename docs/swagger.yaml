@@ -1,17 +1,17 @@
 basePath: /v1
 definitions:
-  v1.SignUpRequestDto:
-    properties:
-      phone:
-        type: string
-    required:
-    - phone
-    type: object
   v1.response:
     properties:
       error:
         example: message
         type: string
+    type: object
+  v1.signUpRequestBody:
+    properties:
+      phone:
+        type: string
+    required:
+    - phone
     type: object
 host: localhost:3000
 info:
@@ -31,7 +31,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/v1.SignUpRequestDto'
+          $ref: '#/definitions/v1.signUpRequestBody'
       produces:
       - application/json
       responses:

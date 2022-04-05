@@ -1,5 +1,5 @@
 package v1
 
-type SignUpRequestDto struct {
+type signUpRequestBody struct {
 	Phone string `json:"phone" binding:"required,e164"`
 }

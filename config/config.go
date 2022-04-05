@@ -9,10 +9,11 @@ import (
 type (
 	// Config -.
 	Config struct {
-		App  `yaml:"app"`
-		HTTP `yaml:"http"`
-		Log  `yaml:"logger"`
-		PG   `yaml:"postgres"`
+		App      `yaml:"app"`
+		HTTP     `yaml:"http"`
+		Log      `yaml:"logger"`
+		PG       `yaml:"postgres"`
+		Database `yaml:"database"`
 	}
 
 	// App -.
@@ -35,6 +36,13 @@ type (
 	PG struct {
 		PoolMax int    `env-required:"true" yaml:"pool_max" env:"PG_POOL_MAX"`
 		URL     string `env-required:"true"                 env:"PG_URL"`
+	}
+
+	Database struct {
+		User     string `env-required:"true" yaml:"user" env:"DB_USERNAME"`
+		Password string `env-required:"true" yaml:"password" env:"DB_PASSWORD"`
+		Name     string `env-required:"true" yaml:"name" env:"DB_DATABASE"`
+		Port     string `env-required:"true" yaml:"port" env:"DB_PORT"`
 	}
 )
 

@@ -11,3 +11,9 @@ logger:
 
 postgres:
   pool_max: 2
+
+database:
+  user: 'fairseller'
+  password: 'fairseller'
+  name: 'fairseller'
+  port: '5432'

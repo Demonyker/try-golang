@@ -3,19 +3,17 @@ package v1
 import (
 	"net/http"
 
-	"fairseller-backend/internal/entity"
-	"fairseller-backend/internal/usecase"
 	"fairseller-backend/pkg/logger"
 
 	"github.com/gin-gonic/gin"
 )
 
 type authRoutes struct {
-	authUseCase usecase.Auth
+	authUseCase AuthUseCase
 	logger      logger.Interface
 }
 
-func newAuthRoutes(handler *gin.RouterGroup, authUseCase usecase.Auth, l logger.Interface) {
+func newAuthRoutes(handler *gin.RouterGroup, authUseCase AuthUseCase, l logger.Interface) {
 	routes := &authRoutes{authUseCase, l}
 
 	authHandler := handler.Group("/auth")
@@ -27,12 +25,12 @@ func newAuthRoutes(handler *gin.RouterGroup, authUseCase usecase.Auth, l logger.
 // @Tags        Auth
 // @Accept      json
 // @Produce     json
-// @Param       data body SignUpRequestDto true "Phone for getting code"
+// @Param       data body signUpRequestBody true "Phone for getting code"
 // @Success     200
 // @Failure     500 {object} response
 // @Router      /auth/sign-up-request [post]
 func (r *authRoutes) signUpRequest(c *gin.Context) {
-	body := SignUpRequestDto{}
+	body := signUpRequestBody{}
 	if err := c.BindJSON(&body); err != nil {
 		r.logger.Error(err, "http - v1 - auth - signUpRequest")
 		validationErrorResponse(err, c)
@@ -40,11 +38,7 @@ func (r *authRoutes) signUpRequest(c *gin.Context) {
 		return
 	}
 
-	dto := entity.SignUpRequest{
-		Phone: body.Phone,
-	}
-
-	if err := r.authUseCase.SignUpRequest(c.Request.Context(), dto); err != nil {
+	if err := r.authUseCase.SignUpRequest(c.Request.Context(), body.Phone); err != nil {
 		r.logger.Error(err, "http - v1 - auth - signUpRequest")
 		errorResponse(c, http.StatusInternalServerError, err.Error())
 

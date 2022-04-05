@@ -18,7 +18,7 @@ compose-down: ### Down docker-compose
 .PHONY: compose-down
 
 swag-v1: ### swag init
-	swag init -g internal/controller/http/v1/router.go
+	swag init -g internal/gateway/http/v1/router.go
 .PHONY: swag-v1
 
 run: swag-v1 ### swag run
@@ -30,17 +30,9 @@ docker-rm-volume: ### remove docker volume
 	docker volume rm go-clean-template_pg-data
 .PHONY: docker-rm-volume
 
-linter-golangci: ### check by golangci linter
+lint: ### check by golangci linter
 	golangci-lint run
 .PHONY: linter-golangci
-
-linter-hadolint: ### check by hadolint linter
-	git ls-files --exclude='Dockerfile*' --ignored | xargs hadolint
-.PHONY: linter-hadolint
-
-linter-dotenv: ### check by dotenv linter
-	dotenv-linter
-.PHONY: linter-dotenv
 
 migrate-create:  ### create new migration
 	migrate create -ext sql -dir migrations $(migrate_name)

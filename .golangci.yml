@@ -62,7 +62,7 @@ issues:
       linters:
         - paralleltest
         - godot
-    - path: internal/controller/http
+    - path: internal/gateway/http
       linters:
         - godot
 

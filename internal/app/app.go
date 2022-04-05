@@ -8,12 +8,12 @@ import (
 	"syscall"
 
 	"fairseller-backend/config"
-	v1 "fairseller-backend/internal/controller/http/v1"
+	v1 "fairseller-backend/internal/gateway/http/v1"
 	"fairseller-backend/internal/repository"
 	"fairseller-backend/internal/usecase"
+	"fairseller-backend/pkg/db"
 	"fairseller-backend/pkg/httpserver"
 	"fairseller-backend/pkg/logger"
-	"fairseller-backend/pkg/postgres"
 
 	"github.com/gin-gonic/gin"
 )
@@ -23,13 +23,14 @@ func Run(cfg *config.Config) {
 	l := logger.New(cfg.Log.Level)
 
 	// Repository
-	pg, err := postgres.New(cfg.PG.URL, postgres.MaxPoolSize(cfg.PG.PoolMax))
+	pgUrl := fmt.Sprintf("host=localhost user=%s password=%s dbname=%s port=%s sslmode=disable", cfg.Database.User, cfg.Database.Password, cfg.Database.Name, cfg.Database.Port)
+
+	db, err := db.New(pgUrl)
 	if err != nil {
 		l.Fatal(fmt.Errorf("app - Run - postgres.New: %w", err))
 	}
-	defer pg.Close()
 
-	repositoryContainer := repository.New(pg)
+	repositoryContainer := repository.New(db)
 	// Use case
 	authUseCase := usecase.NewAuthUseCase(
 		repositoryContainer.UserRepository,

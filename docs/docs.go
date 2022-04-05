@@ -36,7 +36,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/v1.SignUpRequestDto"
+                            "$ref": "#/definitions/v1.signUpRequestBody"
                         }
                     }
                 ],
@@ -55,7 +55,16 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "v1.SignUpRequestDto": {
+        "v1.response": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string",
+                    "example": "message"
+                }
+            }
+        },
+        "v1.signUpRequestBody": {
             "type": "object",
             "required": [
                 "phone"
@@ -63,15 +72,6 @@ const docTemplate = `{
             "properties": {
                 "phone": {
                     "type": "string"
-                }
-            }
-        },
-        "v1.response": {
-            "type": "object",
-            "properties": {
-                "error": {
-                    "type": "string",
-                    "example": "message"
                 }
             }
         }

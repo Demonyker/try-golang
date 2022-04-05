@@ -1,15 +1,13 @@
 package repository
 
-import "fairseller-backend/pkg/postgres"
-
-// const _defaultEntityCap = 64
+import "gorm.io/gorm"
 
 type Repository struct {
 	UserRepository *UserRepository
 }
 
-func New(pg *postgres.Postgres) *Repository {
+func New(db *gorm.DB) *Repository {
 	return &Repository{
-		UserRepository: NewUserRepository(pg),
+		UserRepository: NewUserRepository(db),
 	}
 }
