@@ -9,7 +9,7 @@ import (
 
 	// Swagger docs.
 	_ "fairseller-backend/docs"
-	"fairseller-backend/pkg/logger"
+	"fairseller-backend/internal/entity"
 )
 
 // NewRouter -.
@@ -19,7 +19,7 @@ import (
 // @version     1.0
 // @host        localhost:3000
 // @BasePath    /v1
-func NewRouter(handler *gin.Engine, l logger.Interface, authUseCase AuthUseCase) {
+func NewRouter(handler *gin.Engine, l entity.Logger, authUseCase AuthUseCase) {
 	// Options
 	handler.Use(gin.Logger())
 	handler.Use(gin.Recovery())

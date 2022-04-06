@@ -27,7 +27,7 @@ func Run(cfg *config.Config) {
 
 	db, err := db.New(pgUrl)
 	if err != nil {
-		l.Fatal(fmt.Errorf("app - Run - postgres.New: %w", err))
+		l.Error("Database start error", err)
 	}
 
 	repositoryContainer := repository.New(db)
@@ -48,14 +48,14 @@ func Run(cfg *config.Config) {
 
 	select {
 	case s := <-interrupt:
-		l.Info("app - Run - signal: " + s.String())
+		l.Info("App get signal " + s.String())
 	case err = <-server.Notify():
-		l.Error(fmt.Errorf("app - Run - httpserver.Notify: %w", err))
+		l.Error("Server notify error", err)
 	}
 
 	// Shutdown
 	err = server.Shutdown()
 	if err != nil {
-		l.Error(fmt.Errorf("app - Run - httpserver.Shutdown: %w", err))
+		l.Error("Server shutdown error", err)
 	}
 }

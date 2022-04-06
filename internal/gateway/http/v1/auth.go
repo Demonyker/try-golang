@@ -3,17 +3,17 @@ package v1
 import (
 	"net/http"
 
-	"fairseller-backend/pkg/logger"
+	"fairseller-backend/internal/entity"
 
 	"github.com/gin-gonic/gin"
 )
 
 type authRoutes struct {
 	authUseCase AuthUseCase
-	logger      logger.Interface
+	logger      entity.Logger
 }
 
-func newAuthRoutes(handler *gin.RouterGroup, authUseCase AuthUseCase, l logger.Interface) {
+func newAuthRoutes(handler *gin.RouterGroup, authUseCase AuthUseCase, l entity.Logger) {
 	routes := &authRoutes{authUseCase, l}
 
 	authHandler := handler.Group("/auth")
@@ -32,14 +32,13 @@ func newAuthRoutes(handler *gin.RouterGroup, authUseCase AuthUseCase, l logger.I
 func (r *authRoutes) signUpRequest(c *gin.Context) {
 	body := signUpRequestBody{}
 	if err := c.BindJSON(&body); err != nil {
-		r.logger.Error(err, "http - v1 - auth - signUpRequest")
+		r.logger.GatewayError(err)
 		validationErrorResponse(err, c)
 
 		return
 	}
 
 	if err := r.authUseCase.SignUpRequest(c.Request.Context(), body.Phone); err != nil {
-		r.logger.Error(err, "http - v1 - auth - signUpRequest")
 		errorResponse(c, http.StatusInternalServerError, err.Error())
 
 		return
