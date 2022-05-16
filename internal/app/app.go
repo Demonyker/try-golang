@@ -3,6 +3,7 @@ package app
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"os/signal"
 	"syscall"
@@ -20,7 +21,13 @@ import (
 
 // Run creates objects via constructors.
 func Run(cfg *config.Config) {
-	l := logger.New(cfg.Log.Level)
+	file, logFileError := os.OpenFile("logs/out.log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	if logFileError != nil {
+		log.Fatalf("Log file error: %s", logFileError)
+	}
+
+	l := logger.New(file)
+	defer file.Close()
 
 	// Repository
 	pgUrl := fmt.Sprintf("host=localhost user=%s password=%s dbname=%s port=%s sslmode=disable", cfg.Database.User, cfg.Database.Password, cfg.Database.Name, cfg.Database.Port)

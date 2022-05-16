@@ -1,6 +1,7 @@
 package logger
 
 import (
+	"io"
 	"runtime"
 
 	"github.com/sirupsen/logrus"
@@ -11,9 +12,10 @@ type Logger struct {
 	logger *logrus.Logger
 }
 
-func New(level string) *Logger {
+func New(file io.Writer) *Logger {
 	logger := logrus.New()
 	logger.SetFormatter(&ecslogrus.Formatter{})
+	logger.SetOutput(file)
 
 	return &Logger{
 		logger,
@@ -38,7 +40,7 @@ func (l *Logger) GatewayError(err error) {
 	isCanShowCaller := ok && details != nil
 
 	if isCanShowCaller {
-		l.logger.WithField("caller", details.Name()).WithError(err).Error("Error in gateway")
+		l.logger.WithField("caller", details.Name()).WithField("layer", "presenter").WithError(err).Error("Error in gateway")
 	} else {
 		l.Error("Error in gateway", err)
 	}
@@ -50,7 +52,7 @@ func (l *Logger) DatabaseError(err error) {
 	isCanShowCaller := ok && details != nil
 
 	if isCanShowCaller {
-		l.logger.WithField("caller", details.Name()).WithError(err).Error("Databse error")
+		l.logger.WithField("caller", details.Name()).WithField("layer", "repository").WithError(err).Error("Databse error")
 	} else {
 		l.Error("Databse error", err)
 	}
@@ -62,7 +64,7 @@ func (l *Logger) UseCaseError(err error) {
 	isCanShowCaller := ok && details != nil
 
 	if isCanShowCaller {
-		l.logger.WithField("caller", details.Name()).WithError(err).Error("Error in useCase")
+		l.logger.WithField("caller", details.Name()).WithField("layer", "useCase").WithError(err).Error("Error in useCase")
 	} else {
 		l.Error("Error in useCase", err)
 	}
