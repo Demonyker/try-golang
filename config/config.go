@@ -14,6 +14,7 @@ type (
 		Log      `yaml:"logger"`
 		PG       `yaml:"postgres"`
 		Database `yaml:"database"`
+		Redis    `yaml:"redis"`
 	}
 
 	// App -.
@@ -43,6 +44,11 @@ type (
 		Password string `env-required:"true" yaml:"password" env:"DB_PASSWORD"`
 		Name     string `env-required:"true" yaml:"name" env:"DB_DATABASE"`
 		Port     string `env-required:"true" yaml:"port" env:"DB_PORT"`
+	}
+
+	Redis struct {
+		Host string `env-required:"true" yaml:"host" env:"REDIST_HOST"`
+		Port string `env-required:"true" yaml:"port" env:"REDIS_PORT"`
 	}
 )
 

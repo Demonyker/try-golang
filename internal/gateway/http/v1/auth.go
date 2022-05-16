@@ -38,7 +38,7 @@ func (r *authRoutes) signUpRequest(c *gin.Context) {
 		return
 	}
 
-	if err := r.authUseCase.SignUpRequest(c.Request.Context(), body.Phone); err != nil {
+	if err := r.authUseCase.SignUpRequest(body.Phone); err != nil {
 		errorResponse(c, http.StatusInternalServerError, err.Error())
 
 		return

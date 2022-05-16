@@ -1,7 +1,6 @@
 package usecase
 
 import (
-	"context"
 	"fmt"
 
 	"fairseller-backend/internal/entity"
@@ -19,8 +18,7 @@ func NewAuthUseCase(userRepository userRepositoryInterface, l entity.Logger) *Au
 	}
 }
 
-// SignUpRequest - first step of sign up with sending code to phone.
-func (uc *AuthUseCase) SignUpRequest(ctx context.Context, phone string) error {
+func (uc *AuthUseCase) SignUpRequest(phone string) error {
 	user, err := uc.userRepository.GetOneByPhone(phone)
 
 	if err != nil {
