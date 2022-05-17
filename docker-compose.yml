@@ -10,6 +10,7 @@ services:
        - DB_PORT=${DB_PORT}
      volumes:
        - ./uploads/:/opt/app/uploads
+       - ./logs/:/opt/app/logs
      links:
       - postgres
      ports:
