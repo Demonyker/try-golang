@@ -11,6 +11,16 @@ import (
 	"go.elastic.co/ecslogrus"
 )
 
+type bodyLogWriter struct {
+	gin.ResponseWriter
+	body *bytes.Buffer
+}
+
+func (w bodyLogWriter) Write(b []byte) (int, error) {
+	w.body.Write(b)
+	return w.ResponseWriter.Write(b)
+}
+
 type Logger struct {
 	logger *logrus.Logger
 }
@@ -124,4 +134,29 @@ func getFieldsFromJson(jsonMessage string) (logrus.Fields, error) {
 	}
 
 	return fields, nil
+}
+
+func (l *Logger) ServerResponseInfo(c *gin.Context) {
+	blw := &bodyLogWriter{body: bytes.NewBufferString(""), ResponseWriter: c.Writer}
+	method := c.Request.Method
+	path := c.Request.URL.Path
+
+	c.Writer = blw
+	c.Next()
+
+	statusCode := c.Writer.Status()
+	data := blw.body.String()
+
+	loggerEntry := l.logger.
+		WithField("method", method).
+		WithField("url", path).
+		WithField("statusCode", statusCode)
+
+	parsedData, err := getFieldsFromJson(data)
+
+	if err == nil {
+		loggerEntry = loggerEntry.WithField("data", parsedData)
+	}
+
+	loggerEntry.Info("RESPONSE")
 }

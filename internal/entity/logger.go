@@ -10,4 +10,5 @@ type Logger interface {
 	DatabaseError(err error)
 	UseCaseError(err error)
 	ServerRequestInfo(c *gin.Context) error
+	ServerResponseInfo(c *gin.Context)
 }

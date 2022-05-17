@@ -30,6 +30,7 @@ func NewRouter(handler *gin.Engine, l entity.Logger, authUseCase AuthUseCase) {
 			errorResponse(c, http.StatusInternalServerError, err.Error())
 		}
 	})
+	handler.Use(l.ServerResponseInfo)
 
 	// Swagger
 	swaggerHandler := ginSwagger.DisablingWrapHandler(swaggerFiles.Handler, "DISABLE_SWAGGER_HTTP_HANDLER")
