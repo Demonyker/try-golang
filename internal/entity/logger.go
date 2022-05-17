@@ -1,5 +1,7 @@
 package entity
 
+import "github.com/gin-gonic/gin"
+
 type Logger interface {
 	Debug(message string, args ...interface{})
 	Info(message string, args ...interface{})
@@ -7,4 +9,5 @@ type Logger interface {
 	GatewayError(err error)
 	DatabaseError(err error)
 	UseCaseError(err error)
+	ServerRequestInfo(c *gin.Context) error
 }

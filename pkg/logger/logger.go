@@ -1,9 +1,12 @@
 package logger
 
 import (
+	"bytes"
+	"encoding/json"
 	"io"
 	"runtime"
 
+	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 	"go.elastic.co/ecslogrus"
 )
@@ -68,4 +71,57 @@ func (l *Logger) UseCaseError(err error) {
 	} else {
 		l.Error("Error in useCase", err)
 	}
+}
+
+func (l *Logger) ServerRequestInfo(c *gin.Context) error {
+	method := c.Request.Method
+	loggerEntry := l.logger.
+		WithField("method", method).
+		WithField("url", c.Request.URL.Path).
+		WithField("client-ip", c.ClientIP()).
+		WithField("content-type", c.ContentType()).
+		WithField("user-agent", c.Request.UserAgent())
+
+	if method == "GET" {
+		query := c.Request.URL.Query()
+
+		loggerEntry = loggerEntry.WithField("query", query)
+	} else {
+		body, err := c.GetRawData()
+		data := string(body)
+
+		if err != nil {
+			l.logger.Error(err)
+
+			return err
+		}
+
+		parsedData, err := getFieldsFromJson(data)
+
+		if err != nil {
+			l.logger.Error(err)
+
+			return err
+		}
+
+		loggerEntry = loggerEntry.WithField("data", parsedData)
+
+		c.Request.Body = io.NopCloser(bytes.NewReader(body))
+	}
+
+	loggerEntry.Info("REQUEST")
+
+	return nil
+}
+
+func getFieldsFromJson(jsonMessage string) (logrus.Fields, error) {
+	fields := logrus.Fields{}
+
+	err := json.Unmarshal([]byte(jsonMessage), &fields)
+
+	if err != nil {
+		return fields, err
+	}
+
+	return fields, nil
 }

@@ -2,6 +2,8 @@
 package v1
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	swaggerFiles "github.com/swaggo/files"
@@ -23,6 +25,11 @@ func NewRouter(handler *gin.Engine, l entity.Logger, authUseCase AuthUseCase) {
 	// Options
 	handler.Use(gin.Logger())
 	handler.Use(gin.Recovery())
+	handler.Use(func(c *gin.Context) {
+		if err := l.ServerRequestInfo(c); err != nil {
+			errorResponse(c, http.StatusInternalServerError, err.Error())
+		}
+	})
 
 	// Swagger
 	swaggerHandler := ginSwagger.DisablingWrapHandler(swaggerFiles.Handler, "DISABLE_SWAGGER_HTTP_HANDLER")
@@ -33,5 +40,7 @@ func NewRouter(handler *gin.Engine, l entity.Logger, authUseCase AuthUseCase) {
 
 	// Routers
 	v1Handler := handler.Group("/v1")
+
+	// RESPONSE EWE
 	newAuthRoutes(v1Handler, authUseCase, l)
 }

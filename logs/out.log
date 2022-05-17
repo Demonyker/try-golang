@@ -1,4 +1,0 @@
-{"@timestamp":"2022-04-08T11:29:05.890+0300","caller":"fairseller-backend/internal/usecase.(*AuthUseCase).SignUpRequest","ecs.version":"1.6.0","error":{"message":"user with phone +79081838357 is already exist"},"layer":"useCase","log.level":"error","message":"Error in useCase"}
-{"@timestamp":"2022-04-08T11:29:18.966+0300","ecs.version":"1.6.0","log.level":"info","message":"App get signal interrupt[]"}
-{"@timestamp":"2022-04-08T12:16:59.635+0300","caller":"fairseller-backend/internal/usecase.(*AuthUseCase).SignUpRequest","ecs.version":"1.6.0","error":{"message":"user with phone +79081838357 is already exist"},"layer":"useCase","log.level":"error","message":"Error in useCase"}
-{"@timestamp":"2022-04-08T12:17:02.658+0300","ecs.version":"1.6.0","log.level":"info","message":"App get signal interrupt[]"}

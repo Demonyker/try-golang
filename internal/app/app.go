@@ -7,6 +7,7 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
 
 	"fairseller-backend/config"
 	v1 "fairseller-backend/internal/gateway/http/v1"
@@ -21,7 +22,9 @@ import (
 
 // Run creates objects via constructors.
 func Run(cfg *config.Config) {
-	file, logFileError := os.OpenFile("logs/out.log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	logFileName := fmt.Sprintf("logs/server-start-%s.log", time.Now().Format("2006-01-02T15:04:05.000Z0700"))
+	file, logFileError := os.OpenFile(logFileName, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+
 	if logFileError != nil {
 		log.Fatalf("Log file error: %s", logFileError)
 	}
