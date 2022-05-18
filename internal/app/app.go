@@ -33,14 +33,14 @@ func Run(cfg *config.Config) {
 	defer file.Close()
 
 	// Repository
-	pgUrl := fmt.Sprintf("host=localhost user=%s password=%s dbname=%s port=%s sslmode=disable", cfg.Database.User, cfg.Database.Password, cfg.Database.Name, cfg.Database.Port)
+	pgURL := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable", cfg.Database.Host, cfg.Database.User, cfg.Database.Password, cfg.Database.Name, cfg.Database.Port)
 
-	db, err := db.New(pgUrl)
+	dbEntity, err := db.New(pgURL)
 	if err != nil {
 		l.Error("Database start error", err)
 	}
 
-	repositoryContainer := repository.New(db)
+	repositoryContainer := repository.New(dbEntity)
 	// Use case
 	authUseCase := usecase.NewAuthUseCase(
 		repositoryContainer.UserRepository,

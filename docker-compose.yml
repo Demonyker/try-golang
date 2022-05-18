@@ -4,15 +4,19 @@ services:
    fairseller-api:
      build: ./
      environment:
+       - PG_URL=${PG_URL_DOCKER}
        - DB_USERNAME=${DB_USERNAME}
        - DB_PASSWORD=${DB_PASSWORD}
        - DB_DATABASE=${DB_DATABASE}
        - DB_PORT=${DB_PORT}
+       - HTTP_PORT=${HTTP_PORT}
+       - SOCKET_PORT=${SOCKET_PORT}
+       - REDIS_PORT=${REDIS_PORT}
+       - REDIS_HOST=${REDIS_HOST}
+       - DB_HOST=${DB_HOST_DOCKER}
      volumes:
-       - ./uploads/:/opt/app/uploads
-       - ./logs/:/opt/app/logs
-     links:
-      - postgres
+       - ./uploads/:/uploads
+       - ./logs/:/logs
      ports:
       - ${HTTP_PORT}:3000
       - ${SOCKET_PORT}:80

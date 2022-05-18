@@ -17,6 +17,7 @@ database:
   password: 'fairseller'
   name: 'fairseller'
   port: '5432'
+  host: 'localhost'
 
 redis: 
   host: 'localhost'

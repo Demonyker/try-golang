@@ -44,6 +44,7 @@ type (
 		Password string `env-required:"true" yaml:"password" env:"DB_PASSWORD"`
 		Name     string `env-required:"true" yaml:"name" env:"DB_DATABASE"`
 		Port     string `env-required:"true" yaml:"port" env:"DB_PORT"`
+		Host     string `env-required:"true" yaml:"host" env:"DB_HOST"`
 	}
 
 	Redis struct {
