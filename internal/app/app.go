@@ -15,6 +15,7 @@ import (
 	"fairseller-backend/internal/usecase"
 	"fairseller-backend/pkg/db"
 	"fairseller-backend/pkg/httpserver"
+	"fairseller-backend/pkg/keyvaluestorage"
 	"fairseller-backend/pkg/logger"
 
 	"github.com/gin-gonic/gin"
@@ -41,10 +42,15 @@ func Run(cfg *config.Config) {
 	}
 
 	repositoryContainer := repository.New(dbEntity)
+
+	redisURL := fmt.Sprintf("%s:%s", cfg.Redis.Host, cfg.Redis.Port)
+
+	keyValueStorage := keyvaluestorage.New(redisURL)
 	// Use case
 	authUseCase := usecase.NewAuthUseCase(
 		repositoryContainer.UserRepository,
 		l,
+		keyValueStorage,
 	)
 
 	// HTTP Server

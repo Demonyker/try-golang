@@ -7,14 +7,16 @@ import (
 )
 
 type AuthUseCase struct {
-	userRepository userRepositoryInterface
-	logger         entity.Logger
+	userRepository  userRepositoryInterface
+	logger          entity.Logger
+	keyValueStorage entity.KeyValueStorage
 }
 
-func NewAuthUseCase(userRepository userRepositoryInterface, l entity.Logger) *AuthUseCase {
+func NewAuthUseCase(userRepository userRepositoryInterface, l entity.Logger, keyValueStorage entity.KeyValueStorage) *AuthUseCase {
 	return &AuthUseCase{
-		userRepository: userRepository,
-		logger:         l,
+		userRepository:  userRepository,
+		logger:          l,
+		keyValueStorage: keyValueStorage,
 	}
 }
 
