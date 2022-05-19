@@ -12,7 +12,7 @@ services:
        - HTTP_PORT=${HTTP_PORT}
        - SOCKET_PORT=${SOCKET_PORT}
        - REDIS_PORT=${REDIS_PORT}
-       - REDIS_HOST=${REDIS_HOST}
+       - REDIS_HOST=${REDIS_HOST_DOCKER}
        - DB_HOST=${DB_HOST_DOCKER}
      volumes:
        - ./uploads/:/uploads
